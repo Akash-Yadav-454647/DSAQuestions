@@ -15,7 +15,6 @@ public:
         }
     }
     string findDifferentBinaryString(vector<string>& nums) {
-        map<int,string> mp;
         int n = nums.size();
         string res = "";
         string temp = "";
