@@ -1,15 +1,14 @@
 class Solution {
     vector<int> dp;
-    int solve(vector<int> &nums,int i,int n){
-        if(i>=n){
-            return 0;
+    int solve(vector<int>& nums,int i , int n){
+        dp[0] = 0;
+        dp[1] = nums[0];
+        for(int i = 2; i<=n; i++){
+            int take = nums[i-1]+dp[i-2];
+            int skip = dp[i-1];
+            dp[i] = max(skip,take);
         }
-        if(dp[i]!=-1){
-            return dp[i];
-        }
-        int take = nums[i]+solve(nums,i+2,n);
-        int skip = solve(nums,i+1,n);
-        return dp[i] = max(take,skip);
+        return dp[n];
     }
 public:
     int rob(vector<int>& nums) {
