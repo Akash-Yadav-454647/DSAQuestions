@@ -1,4 +1,4 @@
-class Solution {
+class Solution{
 public:
     int minDominoRotations(vector<int>& tops, vector<int>& bottoms) {
         int res = getRotation(tops, bottoms, tops[0]);
