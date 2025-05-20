@@ -14,9 +14,7 @@ public:
             d[i] += d[i-1];
         }
         for(int i = 0; i<n.size();i++){
-            if(n[i]>0){
-                n[i] += d[i];
-            }
+            n[i] += d[i];
             if(n[i]> 0){
                 return false;
             }
