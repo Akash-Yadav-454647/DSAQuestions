@@ -38,7 +38,7 @@ public:
         dp = vector<vector<vector<int>>>(
             N,                      // idx: 0 to N-1
             vector<vector<int>>(M + 2,  // cmax + 1: from -1 to M → 0 to M+1
-                vector<int>(K + 1, -1))  // cost: 0 to K
+                vector<int>(N + 1, -1))  // cost: 0 to K
         );
         return solve(0, -1, 0);
     }
