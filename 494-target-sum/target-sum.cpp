@@ -1,27 +1,30 @@
+struct pair_hash {
+    size_t operator()(const pair<int, int>& p) const {
+        // Combine the hash of both integers
+        // A common way: shift and xor
+        return hash<int>()(p.first) ^ (hash<int>()(p.second) << 1);
+    }
+};
+
 class Solution {
 public:
-    int offset = 1000;
+    unordered_map<pair<int, int>, int, pair_hash> memo;
 
-    int sl(vector<int> & nums,int target,int n,vector<vector<int>> &dp){
-        if(n==0){
-            if(target == 0){
-                return 1;
-            }
-            else return 0;
-        }
-        if (target + offset < 0 || target + offset > 2000) return 0;
-        if(dp[n][target+offset]!=-1){
-            return dp[n][target+offset];
-        }
-        return dp[n][target+offset] = sl(nums,target-nums[n-1],n-1,dp)+sl(nums,target+nums[n-1],n-1,dp);
-        
+    int dp(const vector<int>& nums, int target, int index, int curr_sum) {
+        pair<int, int> key = {index, curr_sum};
+        if (memo.find(key) != memo.end())
+            return memo[key];
+        if (index < 0)
+            return curr_sum == target ? 1 : 0;
 
+        int positive = dp(nums, target, index - 1, curr_sum + nums[index]);
+        int negative = dp(nums, target, index - 1, curr_sum - nums[index]);
+
+        memo[key] = positive + negative;
+        return memo[key];
     }
-    int findTargetSumWays(vector<int>& nums, int target) {
-        int n = nums.size();
-        vector<vector<int>> dp(n + 1, vector<int>(2001, -1));
-        sl(nums,target,n,dp);
-        return dp[n][target+offset];
 
+    int findTargetSumWays(vector<int>& nums, int target) {
+        return dp(nums, target, nums.size() - 1, 0);
     }
 };
