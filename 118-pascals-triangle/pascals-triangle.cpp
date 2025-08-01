@@ -1,26 +1,18 @@
 class Solution {
 public:
-     vector<vector<int>> fun(int n, vector<vector<int>>  & vec) {
-        if(n==1){
-            vec.push_back({1});
-            return vec;
-        }
-        fun(n-1,vec);
-        int r = vec.size();
-        int m = vec[r-1].size();
-        vector<int> a;
-        a.push_back(1);
-        for(int i = 1; i<m; i++){
-            a.push_back(vec[r-1][i]+vec[r-1][i-1]);
-        }
-        a.push_back(1);
-        vec.push_back(a);
-        return vec;
-     }
     vector<vector<int>> generate(int n) {
-        vector<vector<int>> vec ;
-        fun(n,vec);
+        vector<vector<int>> vec;
+
+        for (int i = 0; i < n; ++i) {
+            vector<int> row(i + 1, 1);  // Start with all 1s
+
+            for (int j = 1; j < i; ++j) {
+                row[j] = vec[i - 1][j - 1] + vec[i - 1][j];
+            }
+
+            vec.push_back(row);
+        }
+
         return vec;
-        
     }
 };
